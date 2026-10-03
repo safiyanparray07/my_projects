@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Student Performance Predictor</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='file.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>AI Student Performance Predictor</h1>
+
+        <p class="subtitle">
+            Enter the student's details to predict performance.
+        </p>
+
+        <form action="/predict" method="POST">
+
+            <div class="form-group">
+                <label>Study Hours:</label>
+                <input type="number"
+                       name="study_hours"
+                       step="0.1"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label>Attendance (%):</label>
+                <input type="number"
+                       name="attendance"
+                       min="0"
+                       max="100"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label>Previous Marks:</label>
+                <input type="number"
+                       name="previous_marks"
+                       min="0"
+                       max="100"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label>Assignment Marks:</label>
+                <input type="number"
+                       name="assignment_marks"
+                       min="0"
+                       max="100"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label>Sleep Hours:</label>
+                <input type="number"
+                       name="sleep_hours"
+                       step="0.1"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label>Practice Questions:</label>
+                <input type="number"
+                       name="practice_questions"
+                       min="0"
+                       required>
+            </div>
+
+            <button type="submit">
+                Predict Performance
+            </button>
+
+        </form>
+
+        {% if prediction %}
+
+        <div class="result">
+
+            <h2>Prediction Result</h2>
+
+            <p>{{ prediction }}</p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>
+{% if history %}
+
+<div class="history">
+
+    <h2>Prediction History</h2>
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Study Hours</th>
+                    <th>Attendance</th>
+                    <th>Previous Marks</th>
+                    <th>Assignment</th>
+                    <th>Sleep</th>
+                    <th>Practice</th>
+                    <th>Prediction</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for row in history %}
+
+                <tr>
+                    <td>{{ row[0] }}</td>
+                    <td>{{ row[1] }}%</td>
+                    <td>{{ row[2] }}</td>
+                    <td>{{ row[3] }}</td>
+                    <td>{{ row[4] }}</td>
+                    <td>{{ row[5] }}</td>
+                    <td><strong>{{ row[6] }}</strong></td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endif %}
